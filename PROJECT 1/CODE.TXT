@@ -1,0 +1,23 @@
+#define moistureSensor A0   // Analog pin A0 for soil moisture sensor
+#define relayPin 7          // Digital pin 7 for relay control
+
+void setup() {
+  pinMode(relayPin, OUTPUT);   // Set relay pin as OUTPUT
+  digitalWrite(relayPin, LOW); // Ensure relay is OFF initially
+  Serial.begin(9600);          // Initialize serial communication for debugging
+}
+
+void loop() {
+  int sensorValue = analogRead(moistureSensor); // Read analog value from the moisture sensor
+  Serial.print("Moisture Level: ");
+  Serial.println(sensorValue);  // Print sensor value to serial monitor
+
+  // Threshold value (400) - Adjust based on sensor calibration
+  if (sensorValue < 400) {     
+    digitalWrite(relayPin, HIGH); // Turn ON water pump (Relay Active)
+  } else {
+    digitalWrite(relayPin, LOW);  // Turn OFF water pump (Relay Inactive)
+  }
+
+  delay(1000);  // 1-second delay (adjust if necessary)
+}
